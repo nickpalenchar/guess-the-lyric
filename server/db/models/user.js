@@ -3,27 +3,9 @@ var crypto = require('crypto');
 var mongoose = require('mongoose');
 
 var schema = new mongoose.Schema({
-    email: {
-        type: String
-    },
-    password: {
-        type: String
-    },
-    salt: {
-        type: String
-    },
-    twitter: {
-        id: String,
-        username: String,
-        token: String,
-        tokenSecret: String
-    },
-    facebook: {
-        id: String
-    },
-    google: {
-        id: String
-    }
+    username: String,
+    score: {type: Number, default: 0},
+    isDealer: {type: Boolean, default: false}
 });
 
 // method to remove sensitive information from user objects before sending them out
@@ -44,16 +26,16 @@ var encryptPassword = function (plainText, salt) {
     return hash.digest('hex');
 };
 
-schema.pre('save', function (next) {
-
-    if (this.isModified('password')) {
-        this.salt = this.constructor.generateSalt();
-        this.password = this.constructor.encryptPassword(this.password, this.salt);
-    }
-
-    next();
-
-});
+//schema.pre('save', function (next) {
+//
+//    if (this.isModified('password')) {
+//        this.salt = this.constructor.generateSalt();
+//        this.password = this.constructor.encryptPassword(this.password, this.salt);
+//    }
+//
+//    next();
+//
+//});
 
 schema.statics.generateSalt = generateSalt;
 schema.statics.encryptPassword = encryptPassword;

@@ -2,11 +2,11 @@ app.config(function ($stateProvider) {
     $stateProvider.state('home', {
         url: '/',
         templateUrl: 'js/home/home.html',
-        controller: 'LoginCtrl'
+        controller: 'AnotherController'
     });
 });
 
-app.controller('LoginCtrl', function ($scope, Socket, $window, $state) {
+app.controller('AnotherController', function ($scope, Socket, $window, $state) {
     console.log("HELLO");
 
     Socket.on('connect', function () {
@@ -14,7 +14,7 @@ app.controller('LoginCtrl', function ($scope, Socket, $window, $state) {
         Socket.emit('newConnection');
     });
     Socket.on('newConnection', function(){
-        console.log("RECIEVED FROM BACKEND")
+        console.log("RECIEVED FROM BACKEND");
         $scope.userConnections++;
         console.log("USER CONNET", $scope.userConnections, $scope.playerMinimum);
         if($scope.userConnections === $scope.playerMinimum) Socket.emit('readyForUsername');

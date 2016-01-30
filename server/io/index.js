@@ -9,12 +9,16 @@ module.exports = function (server) {
     io = socketio(server);
 
     io.on('connection', function (socket) {
-        console.log("HELLO SOCKETS");
+        console.log("HELLO SOCKETS", socket.id);
         // Now have access to socket, wowzers!
         socket.on('newConnection', function () {
             console.log("CONNECTION IN THE BACKEND");
             io.emit('newConnection');
         });
+
+        socket.on('readyForUsername', function(){
+            io.emit('readyForUsername');
+        })
     });
 
     return io;
