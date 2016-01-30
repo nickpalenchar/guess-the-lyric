@@ -24,3 +24,89 @@ body {
 @import 'about/main';
 @import 'tutorial/main';
 @import 'login/main';
+
+
+.player-info {
+	width: 100px;
+	height: 100px;
+	border-radius: 30%;
+	background: url("https://www.passpack.com/wp-content/uploads/2014/01/profile-photo-placeholder.jpg");
+	background-size: 100px 100px;
+	text-align: center;
+	line-height: 30px;
+    display: inline-block;
+    *display: inline;
+    zoom: 1;
+    padding-top: 20px;
+}
+
+.board {
+	margin: 30px 0;
+}
+
+.question-board, .judge-board {
+	width: 100%;
+	height: 190px;
+	border: dashed 3px #d3d3d3;
+	border-radius: 30px;
+    padding: 30px;
+}
+
+.question-board {
+	height: 150px;
+}
+
+.guess-choices {
+	width: 100%;
+	height: 230px;
+	/*background: green;*/
+}
+
+.player-box, .submissions {
+	text-align: justify;
+    -ms-text-justify: distribute-all-lines;
+    text-justify: distribute-all-lines;
+    margin: 0 15px;
+
+}
+
+.player-box:after, .submissions:after {
+	content: '';
+    width: 100%;
+    display: inline-block;
+    font-size: 0;
+    line-height: 0;
+}
+
+.guess {
+	width: 230px;
+	height: 40px;
+	text-align: center;
+	margin: 15px 0;
+}
+
+.guesses {
+	text-align: center;
+}
+
+.guess-choices > .row {
+	margin: 10px 0;
+}
+
+.guess-submissions {
+	width: 100px;
+	text-align: center;
+    display: inline-block;
+    *display: inline;
+    zoom: 1
+}
+
+.lyrics {
+	text-align: center;
+}
+
+.trick {
+	width: 250px;
+	height: 40px;
+}
+
