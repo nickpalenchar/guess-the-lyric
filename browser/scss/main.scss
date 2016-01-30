@@ -3,7 +3,18 @@
 }
 
 body {
-  background: #fdfdfd;
+  background: url("http://myprofilebackgrounds.com/myspace-backgrounds/images/Plaid/688z6fo.gif");
+}
+
+body:after {
+    content: ' ';
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(255,255,255,.3);
+    z-index: -1;
 }
 
 @mixin clearfix {
