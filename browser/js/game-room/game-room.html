@@ -2,11 +2,9 @@
 
   <div class="row">
     <div class="player-box">
-      <div ng-repeat="player in allPlayers">
-        <div class="player-info">
-          <p class="player-name">{{ player.username }}</p>
-          <p class="payer-points">{{ player.score }}</p>
-        </div>
+      <div ng-repeat="player in allPlayers" class="player-info">
+        <p class="player-name">{{ player.username }}</p>
+        <p class="payer-points">{{ player.score }}</p>
       </div>
     </div>
   </div>
