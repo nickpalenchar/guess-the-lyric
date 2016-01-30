@@ -6,7 +6,7 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.controller('AnotherController', function ($scope, Socket, $window, $state) {
+app.controller('AnotherController', function ($scope, Socket, $window, $state, PlayerFactory) {
     console.log("HELLO");
 
     Socket.on('connect', function () {
@@ -65,9 +65,8 @@ app.controller('AnotherController', function ($scope, Socket, $window, $state) {
         }
 
         $scope.submitted = true;
-        UserFactory.addUser($scope.newUser)
+        PlayerFactory.addUser($scope.newUser)
             .then(function (user) {
-                user.currentStatus = "PLAYER";
                 // $scope.allPlayers.push(user)
                 //$scope.currentUser = user
                 // console.log("new current", $scope.currentUser)
@@ -76,12 +75,10 @@ app.controller('AnotherController', function ($scope, Socket, $window, $state) {
                 me = user;
                 console.log("new count", $scope.userCount);
                 // if ($scope.userCount===6){ $scope.roomReady= true}
-
                 Socket.emit('newPlayer', $scope.allPlayers, $scope.userCount);
 
 
             })
-
     };
 
     $scope.joinRoom = function () {
