@@ -4,8 +4,9 @@ var _ = require('lodash');
 module.exports = router;
 
 router.post('/', function(req, res, next){
-    User.create(req.body.playerInfo)
-    .then(createdUser => res.status(200).send(createdUser))
+    console.log("username: ", req.body.username);
+    User.create({ username: req.body.username })
+    .then(function(createdUser) { res.status(200).send(createdUser); })
     .then(null, next);
 });
 

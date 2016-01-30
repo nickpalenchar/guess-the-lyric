@@ -18,10 +18,13 @@ module.exports = function (server) {
 
         socket.on('readyForUsername', function(){
             io.emit('readyForUsername');
-        })
+        });
         socket.on('newPlayer', function (allPlayers, userCount) {
             console.log("adding player!!!");
             io.emit('newPlayer', allPlayers, userCount)
+        });
+        socket.on('startGame', function(){
+            io.emit('startGame');
         });
     });
 

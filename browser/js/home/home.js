@@ -82,14 +82,16 @@ app.controller('AnotherController', function ($scope, Socket, $window, $state, P
     };
 
     $scope.joinRoom = function () {
-        $scope.newUser = "";
-        console.log("current me", me);
-        var gifDeck;
-        GifFactory.constructApiDeck()
-            .then(deck => gifDeck = deck)
-        .then(() => QuestionFactory.constructQuestionDeck())
-        .then(questionDeck => GifFactory.saveConstructedDecks(questionDeck, gifDeck))
-        .then(savedDeck => Socket.emit('joinRoom', savedDeck._id));
+        Socket.emit('startGame')
+
+        //FROM GAH for reference:
+        //var gifDeck;
+
+        //GifFactory.constructApiDeck()
+        //    .then(deck => gifDeck = deck)
+        //.then(() => QuestionFactory.constructQuestionDeck())
+        //.then(questionDeck => GifFactory.saveConstructedDecks(questionDeck, gifDeck))
+        //.then(savedDeck => Socket.emit('joinRoom', savedDeck._id));
     };
 
     Socket.on('gameStart', function (deckId) {
@@ -115,4 +117,8 @@ app.controller('AnotherController', function ($scope, Socket, $window, $state, P
         console.log("count", userCount);
         $scope.$digest()
     });
+
+    Socket.on('startGame', function(){
+        $state.go('gameRoom')
+    })
 });
