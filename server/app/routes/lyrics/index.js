@@ -1,4 +1,4 @@
-const music = require('musicmatch')({ usertoken: 'e4667302870a71d24952a72c5d0aa55f'})
+const music = require('musicmatch')({ usertoken: 'e4667302870a71d24952a72c5d0aa55f'});
 const router = require('express').Router();
 module.exports = router;
 
