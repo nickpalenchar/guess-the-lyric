@@ -77,13 +77,22 @@ app.controller('GameRoomController', function ($scope, $http, PlayerFactory, Soc
         return array;
     }
     ////ENDDDD
+    $scope.choosetime = true;
     $scope.myId = me._id
     PlayerFactory.getAll()
         .then(allPlayers => {
             $scope.allPlayers = allPlayers;
             //$scope.$digest();
         });
-    $scope.gamifyLyrics();
+
+    $scope.getNewQuestion = function(){
+        console.log("Get new question invoked")
+        $scope.currentQuestion = $scope.bank.pop();
+        console.log("current question, ", $scope.currentQuestion);
+        $scope.shownLyric = $scope.currentQuestion.shownLyric;
+        $scope.choices = _.shuffle($scope.currentQuestion.choices);
+    }
+
 
     //begining question
     $scope.currentSong = {};
@@ -109,6 +118,15 @@ app.controller('GameRoomController', function ($scope, $http, PlayerFactory, Soc
                 {lyric: "To Yo", correct: false},
                 {lyric: "To Throw", correct: false}
             ]
+        },
+        {
+            shownLyric: "All the small things\nTrue care truth brings\nI'll take...",
+            choices: [
+                {lyric: "My Time", correct: true},
+                {lyric: "One Lift", correct: false},
+                {lyric: "One Hit", correct: false},
+                {lyric: "Your Breath Away", correct: false}
+            ]
         }
     ];
 
@@ -117,5 +135,5 @@ app.controller('GameRoomController', function ($scope, $http, PlayerFactory, Soc
     $scope.currentLyrics = '';
     $scope.answer = '';
     $scope.question = '';
-
+    $scope.getNewQuestion();
 });

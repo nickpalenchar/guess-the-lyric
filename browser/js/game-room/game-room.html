@@ -1,5 +1,5 @@
 <div class="container">
-
+  <button type="button" ng-click="getNewQuestion">NEW Q</button>
   <div class="row">
     <div class="player-box">
       <div ng-repeat="player in allPlayers" class="player-info">
@@ -11,14 +11,11 @@
 
   <div class="judge-board board">
     <p class="lyrics">
-      Say it ain't so <br/>
-      Your drug is a heartbreaker <br/>
-      Say it ain't so <br/>
-      My love is a ...
+      {{currentQuestion.shownLyric}}
     </p>
     <div class="row">
       <div class="submissions">
-        <div ng-repeat="choice in multipleChoices">
+        <div ng-repeat="choice in currentQuestion.choices">
           <button class="guess-submissions btn btn-warning">{{choice.lyric}}</button>
         </div>
       </div>
