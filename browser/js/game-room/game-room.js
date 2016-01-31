@@ -102,14 +102,35 @@ app.controller('GameRoomController', function ($scope, $http, PlayerFactory, Soc
 
     $scope.bank = [
         {
-            shownLyric: "Oh baby, baby,\n How was I supposed",
+            shownLyric: "Oh baby, baby,\n How was I supposed...",
             choices: [
                 {lyric: "To Know", correct: true},
                 {lyric: "To Go", correct: false},
                 {lyric: "To Yo", correct: false},
                 {lyric: "To Throw", correct: false}
             ]
+        },
+
+        {
+            shownLyric: "Say it ain't so \n Your drug is a heartbreaker \n Say it ain't so \n My love is a ...",
+            choices: [
+                {lyric: "high saker", correct: false},
+                {lyric: "life taker", correct: true},
+                {lyric: "wide wicker", correct: false},
+                {lyric: "high taker", correct: false}
+            ]
+        },
+
+        {
+            shownLyric: "Boy, you got my heartbeat runnin' away \n Beating like a drum and it's coming...",
+            choices: [
+                {lyric: "to play", correct: false},
+                {lyric: "my way", correct: false},
+                {lyric: "to say", correct: false},
+                {lyric: "your way", correct: true}
+            ]
         }
+
     ];
 
     $scope.multipleChoices = [];
