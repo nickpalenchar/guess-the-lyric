@@ -2,11 +2,10 @@ const music = require('musicmatch')({ usertoken: 'e4667302870a71d24952a72c5d0aa5
 const router = require('express').Router();
 module.exports = router;
 
-router.get('/song/:songId', function(req, res, next){
+router.get('/:songId', function(req, res, next){
     music.trackLyrics({ track_id: req.params.songId })
     .then(function(data){
-        console.log(data.message.body.lyrics.lyrics_body);
-        res.send(data.message.body.lyrics.lyrics_body);
+        res.send({ lyrics: data.message.body.lyrics.lyrics_body });
     }).catch(function(err){
         console.log(err);
     })

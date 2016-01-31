@@ -14,7 +14,7 @@ app.controller('GameCtrl', function ($scope) {
         //MB:pops it off so you don't get the same song more than once in the same session
         let songId = $scope.songIds.pop();
         //MB:makes the call obv
-        $http.get('/song/' + songId)
+        $http.get('/lyrics/' + songId)
         .then(function(lyrics){
             //MB:sets returned lyrics to scope
             $scope.currentLyrics = lyrics;
