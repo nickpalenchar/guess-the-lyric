@@ -75,6 +75,7 @@ app.controller('AnotherController', function ($scope, Socket, $window, $state, P
                 $scope.userCount += 1;
                 $scope.allPlayers.push(user);
                 me = user;
+                console.log("ME:", me);
                 console.log("new count", $scope.userCount);
                 // if ($scope.userCount===6){ $scope.roomReady= true}
                 Socket.emit('newPlayer', $scope.allPlayers, $scope.userCount);
@@ -101,9 +102,7 @@ app.controller('AnotherController', function ($scope, Socket, $window, $state, P
         console.log("NEW VARS", deckId);
         console.log("PLAYERS", $scope.allPlayers);
         $state.go('home', {
-            allPlayers: $scope.allPlayers,
             me: me,
-            deckId: deckId
         });
     });
 
@@ -121,6 +120,6 @@ app.controller('AnotherController', function ($scope, Socket, $window, $state, P
     });
 
     Socket.on('startGame', function(){
-        $state.go('gameRoom')
+        $state.go('gameRoom', {me: me})
     })
 });

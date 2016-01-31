@@ -18,10 +18,9 @@
     </p>
     <div class="row">
       <div class="submissions">
-        <button class="guess-submissions btn btn-warning">high saker</button>
-        <button class="guess-submissions btn btn-warning">high saker</button>
-        <button class="guess-submissions btn btn-warning">high saker</button>
-        <button class="guess-submissions btn btn-warning">high saker</button>
+        <div ng-repeat="choice in multipleChoices">
+          <button class="guess-submissions btn btn-warning">{{choice.lyric}}</button>
+        </div>
       </div>
     </div>
   </div>

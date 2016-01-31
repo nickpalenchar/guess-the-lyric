@@ -3,9 +3,12 @@ const router = require('express').Router();
 module.exports = router;
 
 router.get('/:songId', function(req, res, next){
+    console.log("HITTING THIS");
     music.trackLyrics({ track_id: req.params.songId })
     .then(function(data){
-        res.send({ lyrics: data.message.body.lyrics.lyrics_body });
+        var song = data.message.body.lyrics.lyrics_body;
+        console.log("ONGs", song)
+        res.send({ lyrics: song });
     }).catch(function(err){
         console.log(err);
     })
