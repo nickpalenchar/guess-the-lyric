@@ -13,8 +13,9 @@ app.controller('AnotherController', function ($scope, Socket, $window, $state, P
         console.log("NEW USER");
         Socket.emit('newConnection');
     });
-    Socket.on('newConnection', function(){
+    Socket.on('newConnection', function(id){
         console.log("RECIEVED FROM BACKEND");
+        $scope.myId = id;
         $scope.userConnections++;
         console.log("USER CONNET", $scope.userConnections, $scope.playerMinimum);
         if($scope.userConnections === $scope.playerMinimum) Socket.emit('readyForUsername');
@@ -53,6 +54,7 @@ app.controller('AnotherController', function ($scope, Socket, $window, $state, P
     var me;
 
     $scope.addUser = function () {
+        console.log("USer", $scope.newUser);
         if(/[^\w\d\s]+/g.test($scope.newUser)){
             $scope.newUser = "";
             return $window.alert("ALPHA-NUMERIC-SPACE CHARACTERS ONLY!");
@@ -65,7 +67,7 @@ app.controller('AnotherController', function ($scope, Socket, $window, $state, P
         }
 
         $scope.submitted = true;
-        PlayerFactory.addUser($scope.newUser)
+        PlayerFactory.addUser($scope.newUser, $scope.myId.slice(2))
             .then(function (user) {
                 // $scope.allPlayers.push(user)
                 //$scope.currentUser = user

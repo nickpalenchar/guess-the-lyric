@@ -12,8 +12,7 @@ module.exports = function (server) {
         console.log("HELLO SOCKETS", socket.id);
         // Now have access to socket, wowzers!
         socket.on('newConnection', function () {
-            console.log("CONNECTION IN THE BACKEND");
-            io.emit('newConnection');
+            io.emit('newConnection', socket.id);
         });
 
         socket.on('readyForUsername', function(){
@@ -25,6 +24,9 @@ module.exports = function (server) {
         });
         socket.on('startGame', function(){
             io.emit('startGame');
+        });
+        socket.on("getId", function(){
+            io.emit("getId", socket.id);
         });
     });
 

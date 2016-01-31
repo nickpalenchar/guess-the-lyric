@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 
 var schema = new mongoose.Schema({
     username: String,
+    socketId: String,
     score: {type: Number, default: 0},
     isDealer: {type: Boolean, default: false}
 });

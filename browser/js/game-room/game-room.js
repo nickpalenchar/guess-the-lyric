@@ -7,13 +7,29 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.controller('GameRoomController', function($scope, PlayerFactory){
+app.controller('GameRoomController', function($scope, PlayerFactory, Socket){
 
     PlayerFactory.getAll()
         .then(allPlayers => {
             $scope.allPlayers = allPlayers;
-            $scope.$digest();
+            //$scope.$digest();
         });
+
+
+    //begining question
+    $scope.currentSong = {};
+
+    Socket.emit("getId");
+    Socket.on("getId", function(id){
+        id = id.slice(2);
+        console.log("THE ID", id);
+        //Lookup id
+        PlayerFactory.getOne(id)
+            .then(function(thePlayer){
+                console.log("the Player is", thePlayer);
+                $scope.me = thePlayer;
+            })
+    });
 
     $scope.songIds = [
     '33569370',
@@ -23,7 +39,7 @@ app.controller('GameRoomController', function($scope, PlayerFactory){
     ];
 
     $scope.multipleChoices = [
-    ]
+    ];
     $scope.wholeSong = '';
     $scope.currentLyrics = '';
     $scope.answer = '';
@@ -31,7 +47,7 @@ app.controller('GameRoomController', function($scope, PlayerFactory){
 
     $scope.shuffle = function(array) {
     //shuffles an array. not mine.
-    var currentIndex = array.length, temporaryValue, randomIndex ;
+    var currentIndex = array.length, temporaryValue, randomIndex;
     while (0 !== currentIndex) {
         randomIndex = Math.floor(Math.random() * currentIndex);
         currentIndex -= 1;
@@ -57,7 +73,7 @@ app.controller('GameRoomController', function($scope, PlayerFactory){
             let line = lines[Math.floor(Math.random() * lines.length)];
             $scope.multipleChoices.push({
                 lyric: line,
-                correct: false;
+                correct: false
             })
         }
     }
