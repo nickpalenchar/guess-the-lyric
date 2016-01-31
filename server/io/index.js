@@ -28,6 +28,9 @@ module.exports = function (server) {
         socket.on("getId", function(){
             io.emit("getId", socket.id);
         });
+        socket.on("updatePlayers", function(newPlayers){
+            io.emit("updatePlayers", newPlayers);
+        })
     });
 
     return io;

@@ -14,13 +14,17 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.controller('GameRoomController', function ($scope, $http, PlayerFactory, Socket, me) {
+app.controller('GameRoomController', function ($scope, $window, $http, PlayerFactory, Socket, me) {
     $scope.songIds = [
         '33569370',
         '2631422',
         '6890984',
         '5468100'
     ];
+    Socket.on('updatePlayers',function(newPlayers){
+        $scope.allPlayers = newPlayers;
+        $scope.$digest();
+    })
     //MB:makes the call to the node server that makes the call to MusixMatch and gets a lyric body
     $scope.getLyrics = function () {
         console.log("scope SONGS", $scope.songIds);
@@ -29,7 +33,7 @@ app.controller('GameRoomController', function ($scope, $http, PlayerFactory, Soc
         let songId = $scope.songIds.pop();
         //MB:return promise for call
         return $http.get('/api/lyrics/' + songId)
-    }
+    };
     $scope.gamifyLyrics = function () {
         $scope.getLyrics()
             .then(function (lyrics) {
@@ -75,7 +79,7 @@ app.controller('GameRoomController', function ($scope, $http, PlayerFactory, Soc
             array[randomIndex] = temporaryValue;
         }
         return array;
-    }
+    };
     ////ENDDDD
     $scope.choosetime = true;
     $scope.myId = me._id
@@ -83,6 +87,12 @@ app.controller('GameRoomController', function ($scope, $http, PlayerFactory, Soc
         .then(allPlayers => {
             $scope.allPlayers = allPlayers;
             //$scope.$digest();
+            for(var i = 0; i < $scope.allPlayers; i++){
+                if (me._id === $scope.allPlayers[i]._id){
+                    $scope.meId = i;
+                    break;
+                }
+            }
         });
 
     $scope.getNewQuestion = function(){
@@ -91,7 +101,7 @@ app.controller('GameRoomController', function ($scope, $http, PlayerFactory, Soc
         console.log("current question, ", $scope.currentQuestion);
         $scope.shownLyric = $scope.currentQuestion.shownLyric;
         $scope.choices = _.shuffle($scope.currentQuestion.choices);
-    }
+    };
 
 
     //begining question
@@ -127,8 +137,38 @@ app.controller('GameRoomController', function ($scope, $http, PlayerFactory, Soc
                 {lyric: "One Hit", correct: false},
                 {lyric: "Your Breath Away", correct: false}
             ]
+        },
+        {
+            shownLyric: "Say it ain't so \n Your drug is a heartbreaker \n Say it ain't so \n My love is a ...",
+            choices: [
+                {lyric: "high saker", correct: false},
+                {lyric: "life taker", correct: true},
+                {lyric: "wide wicker", correct: false},
+                {lyric: "high taker", correct: false}
+            ]
+        },
+        {
+            shownLyric: "Boy, you got my heartbeat runnin' away \n Beating like a drum and it's coming...",
+            choices: [
+                {lyric: "to play", correct: false},
+                {lyric: "my way", correct: false},
+                {lyric: "to say", correct: false},
+                {lyric: "your way", correct: true}
+            ]
         }
     ];
+
+    $scope.submitAnswer = function(correct){
+        if(correct) {
+            alert("right!")
+            $scope.allPlayers[$scope.meId].score += 1000;
+        }
+        else{
+            alert("wrong")
+        }
+        Socket.emit('updatePlayers', $scope.allPlayers);
+        $scope.getNewQuestion();
+    }
 
     $scope.multipleChoices = [];
     $scope.wholeSong = '';
